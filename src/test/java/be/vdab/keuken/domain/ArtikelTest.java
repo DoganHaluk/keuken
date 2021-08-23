@@ -18,18 +18,18 @@ class ArtikelTest {
     }
 
     @Test
-    void verhoogVerkoopPrijs(){
+    void verhoogVerkoopPrijs() {
         artikel.verhoogVerkoopPrijs(BigDecimal.ONE);
         assertThat(artikel.getVerkoopprijs()).isEqualByComparingTo("21");
     }
 
     @Test
-    void verhoogVerkoopPrijsMetNullMislukt(){
-        assertThatNullPointerException().isThrownBy(()->artikel.verhoogVerkoopPrijs(null));
+    void verhoogVerkoopPrijsMetNullMislukt() {
+        assertThatNullPointerException().isThrownBy(() -> artikel.verhoogVerkoopPrijs(null));
     }
 
     @Test
-    void verhoogVerkoopPrijsMetMetNegatieveWaardeMislukt(){
-        assertThatIllegalArgumentException().isThrownBy(()->artikel.verhoogVerkoopPrijs(BigDecimal.valueOf(-1)));
+    void verhoogVerkoopPrijsMetMetNegatieveWaardeMislukt() {
+        assertThatIllegalArgumentException().isThrownBy(() -> artikel.verhoogVerkoopPrijs(BigDecimal.valueOf(-1)));
     }
 }
