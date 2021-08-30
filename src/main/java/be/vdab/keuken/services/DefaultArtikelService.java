@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Service
 @Transactional
-class DefaultArtikelService implements ArtikelService{
+class DefaultArtikelService implements ArtikelService {
     private final ArtikelRepository artikelRepository;
 
     DefaultArtikelService(ArtikelRepository artikelRepository) {
