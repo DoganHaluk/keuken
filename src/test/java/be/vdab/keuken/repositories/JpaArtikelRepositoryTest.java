@@ -39,13 +39,23 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
     }
 
     @BeforeEach
-    void beforeEach(){
-        artikel=new Artikel("test", BigDecimal.ONE, BigDecimal.ONE);
+    void beforeEach() {
+        artikel = new Artikel("test", BigDecimal.ONE, BigDecimal.ONE);
     }
+
     @Test
-    void create(){
+    void create() {
         repository.create(artikel);
         assertThat(artikel.getId()).isPositive();
-        assertThat(countRowsInTableWhere(ARTIKELS, "id="+artikel.getId())).isOne();
+        assertThat(countRowsInTableWhere(ARTIKELS, "id=" + artikel.getId())).isOne();
+    }
+
+    @Test
+    void findByNaamContainsEenWoord(){
+        var artikels=repository.findByNaamContains("pe");
+        assertThat(artikels)
+                .hasSize(countRowsInTableWhere(ARTIKELS, "naam like 'pe'"))
+                .allSatisfy(naam -> assertThat(naam.getNaam()).containsIgnoringCase("pe"))
+                .isSorted();
     }
 }
