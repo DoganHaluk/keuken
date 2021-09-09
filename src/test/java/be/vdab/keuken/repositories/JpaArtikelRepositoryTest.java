@@ -51,11 +51,17 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
     }
 
     @Test
-    void findByNaamContainsEenWoord(){
-        var artikels=repository.findByNaamContains("pe");
+    void findByNaamContainsEenWoord() {
+        var artikels = repository.findByNaamContains("pe");
         assertThat(artikels)
                 .hasSize(countRowsInTableWhere(ARTIKELS, "naam like 'pe'"))
                 .allSatisfy(naam -> assertThat(naam.getNaam()).containsIgnoringCase("pe"))
                 .isSorted();
+    }
+
+    @Test
+    void verhoogAlleVerkoopPrijzen() {
+        assertThat(repository.verhoogAlleVerkoopPrijzen(BigDecimal.TEN)).isEqualTo(countRowsInTable(ARTIKELS));
+        assertThat(countRowsInTableWhere(ARTIKELS, "verkoopprijs = 1.1 and id = " + idVanTestArtikel())).isOne();
     }
 }

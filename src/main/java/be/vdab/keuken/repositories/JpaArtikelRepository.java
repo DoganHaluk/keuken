@@ -4,6 +4,7 @@ import be.vdab.keuken.domain.Artikel;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +27,16 @@ public class JpaArtikelRepository implements ArtikelRepository {
     }
 
     @Override
-    public List<Artikel> findByNaamContains(String woord){
-        return manager.createQuery("SELECT a FROM Artikel a WHERE a.naam LIKE :woord ORDER BY a.naam", Artikel.class)
+    public List<Artikel> findByNaamContains(String woord) {
+        return manager.createNamedQuery("Artikel.findByNaamContains", Artikel.class)
                 .setParameter("woord", woord)
                 .getResultList();
+    }
+
+    @Override
+    public int verhoogAlleVerkoopPrijzen(BigDecimal percentage) {
+        return manager.createNamedQuery("Artikel.verhoogAlleVerkoopPrijzen")
+                .setParameter("percentage", percentage)
+                .executeUpdate();
     }
 }
