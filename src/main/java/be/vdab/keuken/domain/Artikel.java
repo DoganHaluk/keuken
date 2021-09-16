@@ -4,8 +4,10 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "artikels")
-public class Artikel {
+@DiscriminatorColumn(name = "soort")
+public abstract class Artikel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
