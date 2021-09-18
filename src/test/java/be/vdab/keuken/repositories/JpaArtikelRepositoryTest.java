@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
+import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,11 +18,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(JpaArtikelRepository.class)
 class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
     private final JpaArtikelRepository repository;
+    private final EntityManager manager;
     private static final String ARTIKELS = "artikels";
     private Artikel artikel;
 
-    public JpaArtikelRepositoryTest(JpaArtikelRepository repository) {
+    public JpaArtikelRepositoryTest(JpaArtikelRepository repository, EntityManager manager) {
         this.repository = repository;
+        this.manager = manager;
     }
 
     private long idVanTestArtikel() {
