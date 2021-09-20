@@ -1,6 +1,7 @@
 package be.vdab.keuken.services;
 
 import be.vdab.keuken.domain.Artikel;
+import be.vdab.keuken.domain.FoodArtikel;
 import be.vdab.keuken.exceptions.ArtikelNietGevondenException;
 import be.vdab.keuken.repositories.ArtikelRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +28,7 @@ class DefaultArtikelServiceTest {
     @BeforeEach
     void beforeEach() {
         service = new DefaultArtikelService(repository);
-        artikel = new Artikel("test", BigDecimal.valueOf(10), BigDecimal.valueOf(20));
+        artikel = new FoodArtikel("test", BigDecimal.valueOf(10), BigDecimal.valueOf(20), 10);
     }
 
     @Test

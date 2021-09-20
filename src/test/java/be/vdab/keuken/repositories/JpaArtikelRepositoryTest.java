@@ -1,6 +1,8 @@
 package be.vdab.keuken.repositories;
 
 import be.vdab.keuken.domain.Artikel;
+import be.vdab.keuken.domain.FoodArtikel;
+import be.vdab.keuken.domain.NonFoodArtikel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -27,13 +29,26 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
         this.manager = manager;
     }
 
-    private long idVanTestArtikel() {
-        return jdbcTemplate.queryForObject("SELECT id FROM artikels WHERE naam='test'", Long.class);
+    private long idVanTestFoodArtikel() {
+        return jdbcTemplate.queryForObject("SELECT id FROM artikels WHERE naam='testFood'", Long.class);
+    }
+
+    private long idVanTestNonFoodArtikel() {
+        return jdbcTemplate.queryForObject("SELECT id FROM artikels WHERE naam='testNonFood'", Long.class);
     }
 
     @Test
-    void findById() {
-        assertThat(repository.findById(idVanTestArtikel())).hasValueSatisfying(artikel -> assertThat(artikel.getNaam()).isEqualTo("test"));
+    void findFoodArtikelById() {
+        assertThat(repository.findById(idVanTestFoodArtikel()))
+                .containsInstanceOf(FoodArtikel.class)
+                .hasValueSatisfying(artikel -> assertThat(artikel.getNaam()).isEqualTo("testFood"));
+    }
+
+    @Test
+    void findNonFoodArtikelById() {
+        assertThat(repository.findById(idVanTestNonFoodArtikel()))
+                .containsInstanceOf(NonFoodArtikel.class)
+                .hasValueSatisfying(artikel -> assertThat(artikel.getNaam()).isEqualTo("testNonFood"));
     }
 
     @Test
@@ -41,13 +56,17 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
         assertThat(repository.findById(-1)).isNotPresent();
     }
 
-    @BeforeEach
-    void beforeEach() {
-        artikel = new Artikel("test", BigDecimal.ONE, BigDecimal.ONE);
+    @Test
+    void createFoodArtikel() {
+        var artikel = new FoodArtikel("testFoodArtikel", BigDecimal.ONE, BigDecimal.ONE, 10);
+        repository.create(artikel);
+        assertThat(artikel.getId()).isPositive();
+        assertThat(countRowsInTableWhere(ARTIKELS, "id=" + artikel.getId())).isOne();
     }
 
     @Test
-    void create() {
+    void createNonFoodArtikel() {
+        var artikel = new NonFoodArtikel("testNonFoodArtikel", BigDecimal.ONE, BigDecimal.ONE, 10);
         repository.create(artikel);
         assertThat(artikel.getId()).isPositive();
         assertThat(countRowsInTableWhere(ARTIKELS, "id=" + artikel.getId())).isOne();
@@ -65,6 +84,6 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
     @Test
     void verhoogAlleVerkoopPrijzen() {
         assertThat(repository.verhoogAlleVerkoopPrijzen(BigDecimal.TEN)).isEqualTo(countRowsInTable(ARTIKELS));
-        assertThat(countRowsInTableWhere(ARTIKELS, "verkoopprijs = 1.1 and id = " + idVanTestArtikel())).isOne();
+        assertThat(countRowsInTableWhere(ARTIKELS, "verkoopprijs = 1.1 and id = " + idVanTestFoodArtikel())).isOne();
     }
 }
