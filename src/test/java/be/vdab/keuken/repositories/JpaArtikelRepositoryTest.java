@@ -20,13 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(JpaArtikelRepository.class)
 class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
     private final JpaArtikelRepository repository;
-    private final EntityManager manager;
     private static final String ARTIKELS = "artikels";
-    private Artikel artikel;
 
-    public JpaArtikelRepositoryTest(JpaArtikelRepository repository, EntityManager manager) {
+    public JpaArtikelRepositoryTest(JpaArtikelRepository repository) {
         this.repository = repository;
-        this.manager = manager;
     }
 
     private long idVanTestFoodArtikel() {
