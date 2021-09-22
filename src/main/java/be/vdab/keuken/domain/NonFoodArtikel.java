@@ -14,10 +14,6 @@ public class NonFoodArtikel extends Artikel {
         this.garantie = garantie;
     }
 
-    public NonFoodArtikel(int garantie) {
-        this.garantie = garantie;
-    }
-
     protected NonFoodArtikel() {
     }
 

@@ -14,11 +14,6 @@ public class FoodArtikel extends Artikel {
         this.houdbaarheid = houdbaarheid;
     }
 
-    public FoodArtikel(int houdbaarheid) {
-        this.houdbaarheid = houdbaarheid;
-    }
-
-
     protected FoodArtikel() {
     }
 
