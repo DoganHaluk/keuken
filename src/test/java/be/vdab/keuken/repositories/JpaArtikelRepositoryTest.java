@@ -87,8 +87,8 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
 
 
     @Test
-    void kortingenLezen(){
+    void kortingenLezen() {
         assertThat(repository.findById(idVanTestFoodArtikel()))
-                .hasValueSatisfying(artikel->assertThat(artikel.getKortingen()).containsOnly(new Korting(5,BigDecimal.TEN)));
+                .hasValueSatisfying(artikel -> assertThat(artikel.getKortingen()).containsOnly(new Korting(5, BigDecimal.TEN)));
     }
 }

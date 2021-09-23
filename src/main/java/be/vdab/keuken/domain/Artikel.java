@@ -26,7 +26,7 @@ public abstract class Artikel {
         this.naam = naam;
         this.aankoopprijs = aankoopprijs;
         this.verkoopprijs = verkoopprijs;
-        this.kortingen= new LinkedHashSet<>();
+        this.kortingen = new LinkedHashSet<>();
     }
 
     protected Artikel() {
@@ -55,7 +55,7 @@ public abstract class Artikel {
         verkoopprijs = verkoopprijs.add(bedrag);
     }
 
-    public Set<Korting> getKortingen(){
+    public Set<Korting> getKortingen() {
         return Collections.unmodifiableSet(kortingen);
     }
 }
