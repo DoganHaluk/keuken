@@ -1,17 +1,14 @@
 package be.vdab.keuken.repositories;
 
-import be.vdab.keuken.domain.Artikel;
 import be.vdab.keuken.domain.FoodArtikel;
 import be.vdab.keuken.domain.Korting;
 import be.vdab.keuken.domain.NonFoodArtikel;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
