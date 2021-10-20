@@ -1,9 +1,6 @@
 package be.vdab.keuken.repositories;
 
-import be.vdab.keuken.domain.ArtikelGroep;
-import be.vdab.keuken.domain.FoodArtikel;
-import be.vdab.keuken.domain.Korting;
-import be.vdab.keuken.domain.NonFoodArtikel;
+import be.vdab.keuken.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -83,10 +80,14 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
     @Test
     void findByNaamContainsEenWoord() {
         var artikels = repository.findByNaamContains("pe");
+        manager.clear();
         assertThat(artikels)
                 .hasSize(countRowsInTableWhere(ARTIKELS, "naam like 'pe'"))
                 .allSatisfy(naam -> assertThat(naam.getNaam()).containsIgnoringCase("pe"))
                 .isSorted();
+        assertThat(artikels)
+                .extracting(Artikel::getArtikelGroep)
+                .extracting(ArtikelGroep::getNaam);
     }
 
     @Test

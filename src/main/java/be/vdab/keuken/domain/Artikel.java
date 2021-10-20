@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@NamedEntityGraph(name = Artikel.MET_ARTIKELGROEP, attributeNodes = @NamedAttributeNode("artikelGroep"))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "artikels")
 @DiscriminatorColumn(name = "soort")
@@ -25,6 +26,7 @@ public abstract class Artikel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "artikelgroepId")
     private ArtikelGroep artikelGroep;
+    public static final String MET_ARTIKELGROEP = "Artikel.metArtikelGroep";
 
     public Artikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, ArtikelGroep artikelGroep) {
         this.naam = naam;
