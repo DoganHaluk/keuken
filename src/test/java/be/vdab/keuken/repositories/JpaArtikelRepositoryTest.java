@@ -82,9 +82,10 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
         var artikels = repository.findByNaamContains("pe");
         manager.clear();
         assertThat(artikels)
-                .hasSize(countRowsInTableWhere(ARTIKELS, "naam like 'pe'"))
-                .allSatisfy(naam -> assertThat(naam.getNaam()).containsIgnoringCase("pe"))
-                .isSorted();
+                .hasSize(countRowsInTableWhere(ARTIKELS, "naam like '%pe%'"))
+                .extracting(Artikel::getNaam)
+                .allSatisfy(naam -> assertThat(naam).containsIgnoringCase("pe"))
+                .isSortedAccordingTo(String::compareToIgnoreCase);
         assertThat(artikels)
                 .extracting(Artikel::getArtikelGroep)
                 .extracting(ArtikelGroep::getNaam);
